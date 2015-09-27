@@ -1,4 +1,17 @@
 {
+    "name": "maidmaid/cffie",
+    "description": "CFFie query SBB/CFF/FFS (http://www.sbb.ch) connections.",
+    "keywords": ["sbb", "cff", "ffs"],
+    "homepage": "https://github.com/maidmaid/cffie",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dany Maillard",
+            "email": "danymaillard93@gmail.com",
+            "homepage": "https://github.com/maidmaid"
+        }
+    ],
     "require": {
         "guzzlehttp/guzzle": "^6.1",
         "symfony/dom-crawler": "^2.7",
@@ -7,5 +20,6 @@
     },
     "autoload": {
         "psr-4": { "Cffie\\": "src/" }
-    }
+    },
+    "bin": ["bin/cffie"]
 }
