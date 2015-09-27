@@ -2,7 +2,6 @@
 
 namespace Cffie\Console;
 
-use Cffie\Command\CffCommand;
 use Cffie\Command\QueryCommand;
 use Symfony\Component\Console\Application as BaseApplication;
 
