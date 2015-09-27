@@ -1,6 +1,10 @@
 <?php
 
-require 'vendor/autoload.php';
+namespace Cffie\Cff;
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Cookie\CookieJar;
+use Symfony\Component\DomCrawler\Crawler;
 
 class CffClient
 {
@@ -8,10 +12,13 @@ class CffClient
 
     public function __construct()
     {
-        $jar = new \GuzzleHttp\Cookie\CookieJar();
-        $this->client = new GuzzleHttp\Client(array(
+        $jar = new CookieJar();
+        $this->client = new Client(array(
             'base_uri' => 'http://fahrplan.sbb.ch',
             'cookies' => $jar,
+            'headers' => array(
+                'User-Agent' => 'CFFie/master',
+            ),
         ));
     }
 
@@ -43,12 +50,12 @@ class CffClient
         return $firstResult ? $match['suggestions'][0] : $match['suggestions'];
     }
 
-    public function query($departure, $arrival, DateTime $date = null)
+    public function query($departure, $arrival, \DateTime $date = null)
     {
-        $date = $date ? $date : new DateTime();
-        $fmt = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::NONE, date_default_timezone_get(), IntlDateFormatter::TRADITIONAL);
+        $date = $date ? $date : new \DateTime();
+        $fmt = new \IntlDateFormatter('en_EN', \IntlDateFormatter::FULL, \IntlDateFormatter::NONE, date_default_timezone_get(), \IntlDateFormatter::TRADITIONAL);
 
-        return $this->client->post('bin/query.exe/fn', array(
+        $response = $this->client->post('bin/query.exe/fn', array(
             'headers' => array(
                 'host' => 'fahrplan.sbb.ch',
                 'origin' => 'http://fahrplan.sbb.ch',
@@ -110,22 +117,25 @@ class CffClient
                 'start' => 'Chercher correspondance',
             )
         ));
+
+        $crawler = new Crawler((string) $response->getBody());
+        $timesD = $crawler->filter('.hfs_overview .overview .time.departure')->each(function ($node, $i) { return trim($node->text()); });
+        $timesA = $crawler->filter('.hfs_overview .overview .time.arrival')->each(function ($node, $i) { return trim($node->text()); });
+        $durations = $crawler->filter('.hfs_overview .overview .duration')->each(function ($node, $i) { return trim($node->text()); });
+        $changes = $crawler->filter('.hfs_overview .overview .changes')->each(function ($node, $i) { return trim($node->text()); });
+        $products = $crawler->filter('.hfs_overview .overview .products')->each(function ($node, $i) { return trim($node->text()); });
+
+        $overviews = array();
+        for ($t = 0; $t < count($timesD); $t++) {
+            $overviews[] = array(
+                'departure' => $timesD[$t],
+                'arrival' => $timesA[$t],
+                'duration' => $durations[$t],
+                'change' => $changes[$t],
+                'product' => $products[$t],
+            );
+        }
+
+        return $overviews;
     }
 }
-
-$cff = new CffClient();
-
-$d = $cff->getStop('Monthey');
-$a = $cff->getStop('St-Maurice');
-
-$response = $cff->query($d, $a);
-
-$crawler = new Symfony\Component\DomCrawler\Crawler((string) $response->getBody());
-$timesD = $crawler->filter('.hfs_overview .overview .time.departure')->each(function ($node, $i) { return trim($node->text()); });
-$timesA = $crawler->filter('.hfs_overview .overview .time.arrival')->each(function ($node, $i) { return trim($node->text()); });
-
-echo $d['value'].' -> '.$a['value']."\n";
-for ($t = 0; $t < count($timesD); $t++) {
-    echo $timesD[$t].' -> '.$timesD[$t]."\n";
-}
-
