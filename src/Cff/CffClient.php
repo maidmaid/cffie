@@ -17,7 +17,7 @@ class CffClient
             'base_uri' => 'http://fahrplan.sbb.ch',
             'cookies' => $jar,
             'headers' => array(
-                'User-Agent' => 'CFFie/master',
+                'User-Agent' => 'CFFie',
             ),
         ));
     }
