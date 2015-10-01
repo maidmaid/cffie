@@ -44,7 +44,7 @@ class CffClient
             ),
         ));
 
-        $body = (string) $response->getBody();
+        $body = utf8_encode((string) $response->getBody());
         preg_match('/({.*})/', $body, $matches);
         $match = json_decode($matches[1], true);
 
@@ -119,7 +119,7 @@ class CffClient
             )
         ));
 
-        $crawler = new Crawler((string) $response->getBody());
+        $crawler = new Crawler(utf8_encode((string) $response->getBody()));
         $timesD = $crawler->filter('.hfs_overview .overview .time.departure')->each(function ($node, $i) { return trim($node->text()); });
         $timesA = $crawler->filter('.hfs_overview .overview .time.arrival')->each(function ($node, $i) { return trim($node->text()); });
         $durations = $crawler->filter('.hfs_overview .overview .duration')->each(function ($node, $i) { return trim($node->text()); });
