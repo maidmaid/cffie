@@ -10,7 +10,7 @@ class CffClient
 {
     private $client;
 
-    public function __construct()
+    public function __construct($debug = false)
     {
         $jar = new CookieJar();
         $this->client = new Client(array(
@@ -19,6 +19,7 @@ class CffClient
             'headers' => array(
                 'User-Agent' => 'CFFie',
             ),
+            'debug' => $debug,
         ));
     }
 

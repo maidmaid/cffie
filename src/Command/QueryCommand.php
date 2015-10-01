@@ -25,7 +25,8 @@ class QueryCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output = new SymfonyStyle($input, $output);
-        $cff = new CffClient();
+        $debug = $output->getVerbosity() === OutputInterface::VERBOSITY_DEBUG;
+        $cff = new CffClient($debug);
 
         $date = new \DateTime($input->getArgument('datetime'));
         $departure = $cff->getStop($input->getArgument('departure'));
