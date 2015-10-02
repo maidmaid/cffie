@@ -120,23 +120,31 @@ class CffClient
         ));
 
         $crawler = new Crawler(utf8_encode((string) $response->getBody()));
-        $timesD = $crawler->filter('.hfs_overview .overview .time.departure')->each(function ($node, $i) { return trim($node->text()); });
-        $timesA = $crawler->filter('.hfs_overview .overview .time.arrival')->each(function ($node, $i) { return trim($node->text()); });
-        $durations = $crawler->filter('.hfs_overview .overview .duration')->each(function ($node, $i) { return trim($node->text()); });
-        $changes = $crawler->filter('.hfs_overview .overview .changes')->each(function ($node, $i) { return trim($node->text()); });
-        $products = $crawler->filter('.hfs_overview .overview .products')->each(function ($node, $i) { return trim($node->text()); });
-
         $overviews = array();
-        for ($t = 0; $t < count($timesD); $t++) {
-            $overviews[] = array(
-                'departure' => $timesD[$t],
-                'arrival' => $timesA[$t],
-                'duration' => $durations[$t],
-                'change' => $changes[$t],
-                'product' => $products[$t],
-            );
+
+        // Get overviews
+        $crawler->filter('.hfs_overview .overview:not(.dateHint)')->each(function (Crawler $node, $i) use (&$overviews) {
+            $overviews[$i] = array_filter(array(
+                count($n = $node->filter('.time.departure')) ? trim($n->text()) : null,
+                count($n = $node->filter('.time.arrival')) ? trim($n->text()) : null,
+                count($n = $node->filter('.duration')) ? trim($n->text()) : null,
+                count($n = $node->filter('.changes')) ? trim($n->text()) : null,
+                count($n = $node->filter('.products')) ? trim($n->text()) : null,
+                sprintf('%s%s',
+                    count($n = $node->filter('.top img')) ? trim($n->attr('alt')) : null,
+                    count($n = $node->filter('.him_icon img')) ? trim($n->attr('alt')) : null
+                ),
+            ), function ($v) { return $v !== null; });
+        });
+
+        // Combine overviews
+        $_overviews = array();
+        for ($i = 0; $i < count($overviews) / 2; $i++) {
+            $overview = $overviews[$i * 2] + $overviews[($i * 2) + 1];
+            ksort($overview);
+            $_overviews[] = array_combine(array('departure', 'arrival', 'duration', 'change', 'product', 'infos'), $overview);
         }
 
-        return $overviews;
+        return $_overviews;
     }
 }

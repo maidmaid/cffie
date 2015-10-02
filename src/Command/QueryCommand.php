@@ -47,7 +47,11 @@ class QueryCommand extends Command
 
         // Query
         $times = $this->cff->query($departure, $arrival, $date);
-        $this->output->table(array('Departure', 'Arrival', 'Duration', 'Chg.', 'Travel with'), $times);
+        $times = array_map(function($v) {
+            $v['infos'] = '<error>'.$v['infos'].'</error>';
+            return $v;
+        }, $times);
+        $this->output->table(array('Departure', 'Arrival', 'Duration', 'Chg.', 'Travel with', 'Infos'), $times);
     }
 
     private function getStop($value, $question = 'Which station ?')
