@@ -17,7 +17,7 @@ class Application extends BaseApplication
 
     public function __construct()
     {
-        parent::__construct('CFFie', '0.1.1');
+        parent::__construct('CFFie', '0.2.0');
     }
 
     protected function getDefaultCommands()
@@ -31,5 +31,10 @@ class Application extends BaseApplication
     public function getHelp()
     {
         return $this->logo.parent::getHelp();
+    }
+
+    public function getLongVersion()
+    {
+        return parent::getLongVersion().' by <comment>Dany Maillard</comment>';
     }
 }
