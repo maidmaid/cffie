@@ -2,6 +2,7 @@
 
 namespace Cffie\Console;
 
+use Cffie\Command\AlertCommand;
 use Cffie\Command\QueryCommand;
 use Symfony\Component\Console\Application as BaseApplication;
 
@@ -24,6 +25,7 @@ class Application extends BaseApplication
     {
         $commands = parent::getDefaultCommands();
         $commands[] = new QueryCommand();
+        $commands[] = new AlertCommand();
 
         return $commands;
     }

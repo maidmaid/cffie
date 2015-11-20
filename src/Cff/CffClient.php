@@ -125,8 +125,8 @@ class CffClient
         // Get overviews
         $crawler->filter('.hfs_overview .overview:not(.dateHint)')->each(function (Crawler $node, $i) use (&$overviews) {
             $overviews[$i] = array_filter(array(
-                count($n = $node->filter('.time.departure')) ? trim($n->text()) : null,
-                count($n = $node->filter('.time.arrival')) ? trim($n->text()) : null,
+                count($n = $node->filter('.time.departure')) ? substr(trim($n->text()), 0, 5) : null,
+                count($n = $node->filter('.time.arrival')) ? substr(trim($n->text()), 0, 5) : null,
                 count($n = $node->filter('.duration')) ? trim($n->text()) : null,
                 count($n = $node->filter('.changes')) ? trim($n->text()) : null,
                 count($n = $node->filter('.products')) ? trim($n->text()) : null,
