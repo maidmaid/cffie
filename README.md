@@ -25,3 +25,8 @@ Create a ``cff`` alias :
 ```
 alias cff='cffie query --notify'
 ```
+
+License
+-------
+
+CFFie is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
