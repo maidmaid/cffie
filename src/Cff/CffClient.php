@@ -121,10 +121,19 @@ class CffClient
 
         $crawler = new Crawler(utf8_encode((string) $response->getBody()));
         $overviews = array();
+        $date = '';
 
         // Get overviews
-        $crawler->filter('.hfs_overview .overview:not(.dateHint)')->each(function (Crawler $node, $i) use (&$overviews) {
-            $overviews[$i] = array_filter(array(
+        $crawler->filter('.hfs_overview .overview')->each(function (Crawler $node) use (&$overviews, &$date) {
+            // Update date
+            if (false !== strpos($node->getNode(0)->getAttribute('class'), 'dateHint')) {
+                // Subtract 8 last chars
+                $date = substr($text = trim($node->text()), ($len = strlen($text)) - 8, $len);
+                return;
+            }
+
+            $overviews[] = array_filter(array(
+                $date,
                 count($n = $node->filter('.time.departure')) ? substr(trim($n->text()), 0, 5) : null,
                 count($n = $node->filter('.time.arrival')) ? substr(trim($n->text()), 0, 5) : null,
                 count($n = $node->filter('.duration')) ? trim($n->text()) : null,
@@ -142,7 +151,10 @@ class CffClient
         for ($i = 0; $i < count($overviews) / 2; $i++) {
             $overview = $overviews[$i * 2] + $overviews[($i * 2) + 1];
             ksort($overview);
-            $_overviews[] = array_combine(array('departure', 'arrival', 'duration', 'change', 'product', 'infos'), $overview);
+            $_overviews[] = array_combine(
+                array('date', 'departure', 'arrival', 'duration', 'change', 'product', 'infos'),
+                $overview
+            );
         }
 
         return $_overviews;

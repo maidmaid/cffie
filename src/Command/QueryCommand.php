@@ -57,12 +57,13 @@ class QueryCommand extends Command
         $delays = array();
         $now = new \DateTime();
         foreach ($times as $time) {
-            $diff = $now->diff(new \DateTime($time['departure']));
+            $diff = $now->diff(\DateTime::createFromFormat('d.m.y H:i', $time['date'].' '.$time['departure']));
             $delays[] = (int) ($diff->format('%r').($diff->h * 60 + $diff->i));
         }
 
         // Show output table
         $formattedTimes = array_map(function($v, $d) {
+            unset($v['date']);
             $v = array('in' => $d.'´') + $v;
             $v['infos'] = '<error>'.$v['infos'].'</error>';
             return $v;
@@ -79,7 +80,6 @@ class QueryCommand extends Command
             $notification = (new Notification())
                 ->setTitle(sprintf("%s -> %s", $departure['value'], $arrival['value']))
                 ->setBody($body)
-                ->setIcon(__DIR__.'/../../cff.jpg')
             ;
             $notifier->send($notification);
         }
