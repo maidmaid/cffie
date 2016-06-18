@@ -58,7 +58,7 @@ class QueryCommand extends Command
         $now = new \DateTime();
         foreach ($times as $time) {
             $diff = $now->diff(new \DateTime($time['departure']));
-            $delays[] = $diff->h * 60 + $diff->i;
+            $delays[] = (int) ($diff->format('%r').($diff->h * 60 + $diff->i));
         }
 
         // Show output table
@@ -91,7 +91,7 @@ class QueryCommand extends Command
 
         if ($stops[0]['value'] != $value) {
             $values = array_column($stops, 'value');
-            $value = $this->output->choice($question, $values, $stops[0]['value']);
+            $value = $this->io->choice($question, $values, $stops[0]['value']);
             $key = array_search($value, $values);
 
             return $stops[$key];
