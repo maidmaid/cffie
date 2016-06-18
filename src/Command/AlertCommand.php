@@ -37,6 +37,11 @@ class AlertCommand extends Command
         ;
     }
 
+    public function isEnabled()
+    {
+        return false;
+    }
+
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         parent::initialize($input, $output);
