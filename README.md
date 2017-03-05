@@ -1,4 +1,4 @@
-# CFFie [![Build Status](https://travis-ci.org/maidmaid/cffie.svg?branch=master)](https://travis-ci.org/maidmaid/cffie)
+# CFFie [![Build Status](https://travis-ci.org/maidmaid/cffie.svg?branch=master)](https://travis-ci.org/maidmaid/cffie) [![Latest Stable Version](https://poser.pugx.org/maidmaid/cffie/v/stable)](https://packagist.org/packages/maidmaid/cffie) [![License](https://poser.pugx.org/maidmaid/cffie/license)](https://packagist.org/packages/maidmaid/cffie) 
 
 > **CFFie** query SBB/CFF/FFS connections from [cff.ch](https://www.cff.ch).
 
