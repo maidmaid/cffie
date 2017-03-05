@@ -18,7 +18,7 @@ class Application extends BaseApplication
 
     public function __construct()
     {
-        parent::__construct('CFFie', '0.3.0');
+        parent::__construct('CFFie', '0.4.0');
     }
 
     protected function getDefaultCommands()
