@@ -1,6 +1,6 @@
 {
     "name": "maidmaid/cffie",
-    "description": "CFFie query SBB/CFF/FFS (http://www.sbb.ch) connections.",
+    "description": "CFFie query SBB/CFF/FFS connections from https://www.cff.ch.",
     "keywords": ["sbb", "cff", "ffs"],
     "homepage": "https://github.com/maidmaid/cffie",
     "type": "library",
