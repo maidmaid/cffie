@@ -1,9 +1,8 @@
-CFFie
-=====
+<p align="center">
+   <img src="cffie.png" width="400">
+</p>
 
-CFFie query SBB/CFF/FFS (http://www.sbb.ch) connections.
-
-![CFFie in action!](cffie.png)
+**CFFie** query SBB/CFF/FFS ([cff.ch](https://www.cff.ch)) connections.
 
 Installation
 ------------
@@ -16,15 +15,22 @@ $ sudo chmod a+x /usr/local/bin/cffie
 Tips
 ----
 
-Use ``--notify`` option to show desktop notification :
+- Use ``--notify`` option to show desktop notification:
+  <p align="center">
+     <img src="doc/notification.png" width="400">
+  </p>
 
-![notification](doc/notification.png)
+- *Watch* connections in continuous:
+  ```
+  watch -ctn 30 cffie query --ansi Lausanne Zurich
+  ```
 
-Create a ``cff`` alias :
+- Create useful aliases:
+  ```
+  alias cff='cffie query --notify'
+  alias cffw='watch -ctn 30 cffie query --ansi'
+  ```
 
-```
-alias cff='cffie query --notify'
-```
 
 License
 -------
