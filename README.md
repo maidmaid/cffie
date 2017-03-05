@@ -1,8 +1,10 @@
+# CFFie
+
+> **CFFie** query SBB/CFF/FFS connections from [cff.ch](https://www.cff.ch).
+
 <p align="center">
    <img src="cffie.png">
 </p>
-
-**CFFie** query SBB/CFF/FFS connections from [cff.ch](https://www.cff.ch).
 
 Installation
 ------------
