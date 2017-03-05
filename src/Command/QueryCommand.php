@@ -71,8 +71,7 @@ class QueryCommand extends Command
         $io->table(array('In', 'Dep.', 'Arr.', 'Dur.', 'Chg.', 'With', 'Infos'), $formattedTimes);
 
         // Show notification
-        if ($input->getOption('notify')) {
-            $notifier = NotifierFactory::create();
+        if ($input->getOption('notify') && $notifier = NotifierFactory::create()) {
             $body = '';
             foreach ($times as $t => $time) {
                 $body .= sprintf("%s - %s | %s | %s chg. | %s | in %s´ %s\r\n", $time['departure'], $time['arrival'], $time['duration'], $time['change'], $time['product'], $delays[$t], $time['infos']);

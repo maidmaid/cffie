@@ -25,7 +25,6 @@ class Application extends BaseApplication
     {
         $commands = parent::getDefaultCommands();
         $commands[] = new QueryCommand();
-        $commands[] = new AlertCommand();
 
         return $commands;
     }
