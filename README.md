@@ -1,8 +1,8 @@
 <p align="center">
-   <img src="cffie.png" width="400">
+   <img src="cffie.png">
 </p>
 
-**CFFie** query SBB/CFF/FFS ([cff.ch](https://www.cff.ch)) connections.
+**CFFie** query SBB/CFF/FFS connections from [cff.ch](https://www.cff.ch).
 
 Installation
 ------------
@@ -17,16 +17,16 @@ Tips
 
 - Use ``--notify`` option to show desktop notification:
   <p align="center">
-     <img src="doc/notification.png" width="400">
+     <img src="doc/notification.png" width="600">
   </p>
 
 - *Watch* connections in continuous:
-  ```
+  ```bash
   watch -ctn 30 cffie query --ansi Lausanne Zurich
   ```
 
 - Create useful aliases:
-  ```
+  ```bash
   alias cff='cffie query --notify'
   alias cffw='watch -ctn 30 cffie query --ansi'
   ```
