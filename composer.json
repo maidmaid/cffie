@@ -18,7 +18,8 @@
         "symfony/css-selector": "^3.0",
         "symfony/console": "^3.0",
         "swiftmailer/swiftmailer": "^5.4",
-        "jolicode/jolinotif": "^1.0"
+        "jolicode/jolinotif": "^1.0",
+        "nesbot/carbon": "^1.22"
     },
     "require-dev": {
         "symfony/filesystem": "~3.0",
